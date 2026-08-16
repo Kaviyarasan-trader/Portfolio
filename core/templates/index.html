@@ -1,0 +1,541 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load portfolio_tags %}
+
+{% block content %}
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="home">
+    <div class="hero-stream" aria-hidden="true"></div>
+
+    <div class="container hero-grid">
+        <div class="hero-main">
+            <p class="hero-eyebrow hero-reveal"><span class="hero-status"><span class="hero-status-dot"></span>{{ hero.status_badge_text|default:"Open to opportunities" }}</span></p>
+
+            <h1 class="hero-title">
+                <span class="hl"><span class="hl-inner">{{ hero.name|default:"Kaviyarasan R." }}</span></span>
+            </h1>
+
+            <p class="hero-role hero-reveal">{{ hero.role_title|default:"Django Full Stack Developer" }}</p>
+
+            <div class="hero-intro">
+                <p class="hero-tagline">{{ hero.tagline|default:profile.tagline }}</p>
+                <div class="hero-ctas">
+                    <a href="#projects" class="btn btn-accent magnetic">View Projects <span class="btn-arrow">→</span></a>
+                    <a href="#contact" class="btn btn-ghost magnetic">Get In Touch</a>
+                    <a href="{% resume_url %}" class="btn btn-ghost magnetic" download>Download Resume <i class="fa-solid fa-download" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-side">
+            <div class="code-card" data-parallax="0.06">
+                <div class="code-bar">
+                    <span class="code-dot code-dot--r"></span>
+                    <span class="code-dot code-dot--y"></span>
+                    <span class="code-dot code-dot--g"></span>
+                    <span class="code-title">developer.py</span>
+                </div>
+                <div class="code-body">
+                    <div class="code-line"><span class="c-p">$</span> <span class="c-fn">whoami</span></div>
+                    <div class="code-line c-out">→ Django Full Stack Developer</div>
+                    <div class="code-line"><span class="c-p">$</span> <span class="c-fn">python</span> <span class="c-arg">manage.py runserver</span></div>
+                    <div class="code-line c-out">→ watching for changes</div>
+                    <div class="code-line c-out">→ system check: no issues</div>
+                    <div class="code-line c-out">→ serving at <span class="c-url">127.0.0.1:8000</span></div>
+                    <div class="code-line"><span class="c-kw">def</span> <span class="c-fn">build</span>(<span class="c-arg">vision</span>):</div>
+                    <div class="code-line c-indent"><span class="c-kw">return</span> <span class="c-str">'digital experiences'</span></div>
+                    <div class="code-caret"></div>
+                </div>
+            </div>
+
+            <div class="tech-float tech-float--py"><i class="devicon-python-plain"></i><span>PYTHON</span></div>
+            <div class="tech-float tech-float--dj"><i class="devicon-django-plain"></i><span>DJANGO</span></div>
+            <div class="tech-float tech-float--js"><i class="fa-brands fa-js"></i><span>JS</span></div>
+
+            <div class="hero-data">
+                <div class="hero-data-item"><span>LOCATION</span><b>{{ profile.location|default:"Salem" }}, India</b></div>
+                <div class="hero-data-item"><span>STATUS</span><b class="ok">Open to work</b></div>
+                <div class="hero-data-item"><span>STACK</span><b>Python · Django · JS</b></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+        <span class="hero-scroll-line"></span>
+        <span class="hero-scroll-text">SCROLL</span>
+    </div>
+
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <div class="marquee-set">
+                {% for skill in skills %}
+                <span>{{ skill.name }}</span><i>✦</i>
+                {% endfor %}
+            </div>
+            <div class="marquee-set">
+                {% for skill in skills %}
+                <span>{{ skill.name }}</span><i>✦</i>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="about section" id="about">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">01 <em>/</em> About</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <h2 class="statement reveal-split">I build practical, dependable web applications with Python, Django and modern frontend technologies.</h2>
+
+        <div class="about-grid">
+            <div class="about-body reveal">{{ about.bio_paragraph_1|default:profile.about|linebreaks }}{% if about.bio_paragraph_2 %}{{ about.bio_paragraph_2|linebreaks }}{% endif %}</div>
+            <div class="about-facts reveal" data-delay="2">
+                <div class="identity">
+                    <div class="identity-bg" aria-hidden="true">
+                        <span class="idbg-grid"></span>
+                        <span class="idbg-sym idbg-sym--1">const</span>
+                        <span class="idbg-sym idbg-sym--2">() =&gt; {}</span>
+                        <span class="idbg-sym idbg-sym--3">def</span>
+                        <span class="idbg-node idbg-node--1"></span>
+                        <span class="idbg-node idbg-node--2"></span>
+                        <span class="idbg-particle idbg-particle--1"></span>
+                        <span class="idbg-particle idbg-particle--2"></span>
+                        <span class="idbg-particle idbg-particle--3"></span>
+                    </div>
+
+                    <div class="identity-main">
+                        {% if global_profile_image_exists %}
+                        <div class="identity-photo" data-photo-open role="button" aria-haspopup="dialog" aria-label="View profile photo">
+                            <img src="{{ global_profile_image }}?v={{ global_profile_image_version }}" alt="Profile photo of {{ profile.name }}" loading="lazy">
+                        </div>
+                        {% endif %}
+                        <div class="identity-head">
+                            <h3 class="identity-name">{{ profile.name }}</h3>
+                            <p class="identity-role">{{ profile.role }}</p>
+                            <p class="identity-intro">Building practical web experiences with Python &amp; Django.</p>
+                        </div>
+                    </div>
+
+                    <div class="identity-status">
+                        <span class="identity-status-dot"></span>
+                        {{ hero.status_badge_text|default:"Open to opportunities" }}
+                    </div>
+
+                    <div class="identity-meta">
+                        <div class="identity-row">
+                            <i class="fa-solid fa-location-dot identity-meta-icon" aria-hidden="true"></i>
+                            <span class="identity-val">{{ about_location }}, India</span>
+                        </div>
+                        <div class="identity-row">
+                            <i class="fa-solid fa-envelope identity-meta-icon" aria-hidden="true"></i>
+                            <a class="identity-val identity-email" href="mailto:{{ about_email }}">{{ about_email }}</a>
+                        </div>
+                    </div>
+
+                    <div class="identity-links">
+                        {% if about_github_url %}
+                        <a href="{{ about_github_url }}" target="_blank" rel="noopener" class="identity-link">
+                            <i class="fa-brands fa-github" aria-hidden="true"></i><span>GitHub</span><span class="identity-link-arrow">↗</span>
+                        </a>
+                        {% endif %}
+                        {% if about_linkedin_url %}
+                        <a href="{{ about_linkedin_url }}" target="_blank" rel="noopener" class="identity-link">
+                            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span><span class="identity-link-arrow">↗</span>
+                        </a>
+                        {% endif %}
+                        {% if profile.has_resume %}
+                        <a href="{{ profile.resume.url }}" target="_blank" rel="noopener" class="identity-link">
+                            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i><span>Resume</span><span class="identity-link-arrow">↗</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-hl">
+            {% for item in what_i_build %}
+            <div class="about-hl-item reveal"{% if forloop.counter > 1 %} data-delay="{{ forloop.counter0 }}"{% endif %}>
+                <span class="about-hl-icon" aria-hidden="true"><i class="fa-solid {{ item.icon_name }}"></i></span>
+                <div class="about-hl-body">
+                    <span class="about-hl-idx">0{{ forloop.counter }}</span>
+                    <span class="about-hl-name">{{ item.title }}</span>
+                    <p class="about-hl-text">{{ item.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="about-stats">
+            <div class="stats-grid">
+                <div class="stat reveal"><span class="stat-num">{{ projects|length|stringformat:"02d" }}</span><span class="stat-label">Projects</span></div>
+                <div class="stat reveal" data-delay="1"><span class="stat-num">{{ skills|length|stringformat:"02d" }}</span><span class="stat-label">Technologies</span></div>
+                <div class="stat reveal" data-delay="2"><span class="stat-num">{{ experiences|length|stringformat:"02d" }}</span><span class="stat-label">Internship</span></div>
+                <div class="stat reveal" data-delay="3"><span class="stat-num">{% for edu in educations %}{{ edu.start_year }}{% endfor %}</span><span class="stat-label">Started coding</span></div>
+            </div>
+            <div class="stats-timeline reveal" data-delay="3">
+                <div class="timeline-item">
+                    <span class="timeline-year">{% for edu in educations %}{{ edu.start_year }}{% endfor %}</span>
+                    <span class="timeline-label">BCA Started</span>
+                </div>
+                <span class="timeline-rule" aria-hidden="true"></span>
+                <div class="timeline-item">
+                    <span class="timeline-year">{% for edu in educations %}{{ edu.end_year }}{% endfor %}</span>
+                    <span class="timeline-label">Graduation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section class="skills section" id="skills">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">02 <em>/</em> Technology stack</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">Development stack</h2>
+            <p class="skills-note reveal">A focused toolset for building complete products — from database schema to interface.</p>
+        </div>
+
+        <div class="stack">
+            {% for category, skill_list in skills_grouped.items %}
+            <div class="stack-col" data-cat="{{ category }}">
+                <div class="stack-cat">
+                    <span class="stack-cat-idx">0{{ forloop.counter }}</span>
+                    <span class="stack-cat-name">{{ category|upper }}</span>
+                </div>
+                <div class="stack-items">
+                    {% for skill in skill_list %}
+                    <div class="stack-item">
+                        <span class="stack-item-idx">0{{ forloop.counter }}</span>
+                        <span class="stack-item-main">
+                            <span class="stack-item-name">{{ skill.name }}</span>
+                        </span>
+                        <i class="{{ skill.icon_class }} stack-item-icon" aria-hidden="true"></i>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section class="experience section" id="experience">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">03 <em>/</em> Experience</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">Professional experience</h2>
+        </div>
+
+        <div class="exp-list">
+            {% for exp in experiences %}
+            <div class="exp-card reveal">
+                <div class="exp-title">
+                    <h3 class="exp-role">{{ exp.role }}</h3>
+                </div>
+                <p class="exp-company">{{ exp.company }}</p>
+                <div class="exp-meta">
+                    <span class="exp-type">Internship</span>
+                    <span class="exp-dates">{{ exp.start_date|date:"M Y" }} — {% if exp.is_current %}Present{% else %}{{ exp.end_date|date:"M Y" }}{% endif %}</span>
+                </div>
+                <div class="exp-tech">
+                    <span class="exp-tech-label">Tech stack</span>
+                    <div class="exp-tech-list">
+                        <span class="chip">Python</span>
+                        <span class="chip">Django</span>
+                        <span class="chip">MySQL</span>
+                        <span class="chip">HTML</span>
+                        <span class="chip">CSS</span>
+                    </div>
+                </div>
+                <div class="exp-desc">{{ exp.description|linebreaks }}</div>
+            </div>
+            {% empty %}
+            <p class="empty-note">Experience details coming soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section class="projects section" id="projects">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">04 <em>/</em> Projects</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">Selected work</h2>
+            <p class="skills-note reveal">End-to-end products — from Django backend to polished interface.</p>
+        </div>
+
+        {% for project in projects|slice:":2" %}
+        {% include 'partials/_project_card.html' %}
+        {% empty %}
+        <p class="empty-note">Projects coming soon.</p>
+        {% endfor %}
+
+        {% if projects|length > 2 %}
+        <div class="see-all-wrap reveal">
+            <a href="{% url 'all_projects' %}" class="see-all">See All Projects <span class="see-all-arrow" aria-hidden="true">→</span></a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ================= GITHUB ACTIVITY ================= -->
+<section class="github section" id="github">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">05 <em>/</em> GitHub Activity</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">Open source activity</h2>
+            <p class="skills-note reveal">Live data pulled from my GitHub account — real contributions, nothing hardcoded.</p>
+        </div>
+
+        <div class="gh-heatmap reveal">
+            <img class="gh-heatmap-img"
+                 src="https://ghchart.rshah.org/{{ github_username }}"
+                 alt="GitHub contribution graph for the last 12 months"
+                 loading="lazy">
+        </div>
+
+        <div class="gh-stats">
+            <div class="gh-card reveal" data-gh-stat="repos">
+                <span class="gh-card-num" data-gh-value="repos">—</span>
+                <span class="gh-card-label">Public repos</span>
+            </div>
+            <div class="gh-card reveal" data-delay="1" data-gh-stat="contributions">
+                <span class="gh-card-num" data-gh-value="contributions">—</span>
+                <span class="gh-card-label">Contributions this year</span>
+            </div>
+            <div class="gh-card reveal" data-delay="2" data-gh-stat="language">
+                <span class="gh-card-num" data-gh-value="language">—</span>
+                <span class="gh-card-label">Most-used language</span>
+            </div>
+        </div>
+
+        <div class="gh-cta reveal">
+            <a class="gh-btn" href="https://github.com/{{ github_username }}" target="_blank" rel="noopener">
+                View GitHub Profile <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOCUS / WHAT I BUILD ================= -->
+<section class="focus section" id="focus">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">06 <em>/</em> What I build</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">Engineering focus</h2>
+        </div>
+
+        <div class="focus-grid">
+            <div class="focus-intro reveal">
+                <span class="focus-intro-label">What I build</span>
+                <h3 class="focus-intro-title">{{ about.heading|default:"Practical products backed by real logic." }}</h3>
+                <p class="focus-intro-note">I work across the full stack so every piece fits together — the model, the view and the interface — and I keep structure, data and clean interaction at the centre of each build.</p>
+            </div>
+
+            <div class="focus-list">
+                {% for item in focus_items %}
+                <div class="focus-item reveal"{% if forloop.counter > 1 %} data-delay="{{ forloop.counter0 }}"{% endif %}>
+                    <span class="focus-item-icon" aria-hidden="true"><i class="fa-solid {{ item.icon_name }}"></i></span>
+                    <div class="focus-item-body">
+                        <span class="focus-item-idx">0{{ forloop.counter }}</span>
+                        <span class="focus-item-title">{{ item.title }}</span>
+                        <p class="focus-item-text">{{ item.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= APPROACH / DEVELOPMENT APPROACH ================= -->
+<section class="approach section" id="approach">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">07 <em>/</em> Approach</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">How I approach development</h2>
+            <p class="skills-note reveal">A practical, repeatable way to take a feature from idea to working software.</p>
+        </div>
+
+        <div class="approach-steps">
+            {% for step in approach_steps %}
+            <div class="approach-step reveal"{% if forloop.counter > 1 %} data-delay="{{ forloop.counter0 }}"{% endif %}>
+                <span class="approach-step-icon" aria-hidden="true"><i class="fa-solid {{ step.icon_name }}"></i></span>
+                <div class="approach-step-body">
+                    <span class="approach-step-title">{{ step.title }}</span>
+                    <p class="approach-step-text">{{ step.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="focus-strip reveal">
+            <div class="focus-strip-label">
+                <span class="focus-strip-kicker">Current focus</span>
+                <b>What I&apos;m deepening</b>
+            </div>
+            <div class="focus-strip-tags">
+                <span class="chip">Django REST APIs</span>
+                <span class="chip">SQL &amp; relational design</span>
+                <span class="chip">JavaScript &amp; responsive UI</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section class="education section" id="education">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">08 <em>/</em> Education</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="skills-top">
+            <h2 class="skills-title reveal">Education</h2>
+        </div>
+
+        <div class="edu-card reveal">
+            <div class="edu-row">
+                <div class="edu-info">
+                    <div class="edu-degree-row">
+                        <span class="edu-marker" aria-hidden="true"></span>
+                        <h3 class="edu-degree">{% for edu in educations %}{{ edu.degree }}{% endfor %}</h3>
+                    </div>
+                    <p class="edu-school">{% for edu in educations %}{{ edu.institution }}{% endfor %}</p>
+                    <p class="edu-university">{% for edu in educations %}{{ edu.university }}{% endfor %}</p>
+                </div>
+                <div class="edu-meta">
+                    <span class="edu-years">{% for edu in educations %}{{ edu.start_year }} — {{ edu.end_year }}{% endfor %}</span>
+                    {% for edu in educations %}{% if edu.grade %}<span class="edu-grade">CGPA {{ edu.grade }}</span>{% endif %}{% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="contact section" id="contact">
+    <div class="container">
+        <div class="section-head">
+            <span class="section-label reveal">09 <em>/</em> Contact</span>
+            <span class="section-rule reveal"></span>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-side reveal">
+                <h2 class="contact-title reveal-split">{{ contact.heading|default:"Let's build something great." }}</h2>
+                <p class="contact-note">{{ contact.subheading|default:"Have a role, project or idea in mind? Let's discuss how we can build something meaningful together." }}</p>
+                <div class="contact-links">
+                    <a href="mailto:{{ contact_email }}" class="contact-link magnetic">
+                        <span class="contact-link-icon"><i class="fa-solid fa-envelope"></i></span>
+                        <div class="contact-link-content">
+                            <span class="contact-link-label">Email</span>
+                            <span class="contact-link-value">{{ contact_email }}</span>
+                        </div>
+                        <span class="contact-link-arrow">↗</span>
+                    </a>
+                    {% if contact_github_url %}
+                    <a href="{{ contact_github_url }}" target="_blank" rel="noopener" class="contact-link magnetic">
+                        <span class="contact-link-icon"><i class="fa-brands fa-github"></i></span>
+                        <div class="contact-link-content">
+                            <span class="contact-link-label">GitHub</span>
+                            <span class="contact-link-value">{{ contact_github_url|cut:"https://github.com/" }}</span>
+                        </div>
+                        <span class="contact-link-arrow">↗</span>
+                    </a>
+                    {% endif %}
+                    {% if contact_linkedin_url %}
+                    <a href="{{ contact_linkedin_url }}" target="_blank" rel="noopener" class="contact-link magnetic">
+                        <span class="contact-link-icon"><i class="fa-brands fa-linkedin-in"></i></span>
+                        <div class="contact-link-content">
+                            <span class="contact-link-label">LinkedIn</span>
+                            <span class="contact-link-value">{{ contact_linkedin_url|cut:"https://www.linkedin.com/in/" }}</span>
+                        </div>
+                        <span class="contact-link-arrow">↗</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <form method="post" class="contact-form reveal" data-delay="2">
+                {% csrf_token %}
+                <div class="form-heading">
+                    <h3>Send me a message</h3>
+                    <p>Have a project in mind or want to discuss an opportunity? I&apos;d be happy to hear from you.</p>
+                </div>
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success" role="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="{{ form.name.id_for_label }}">Name</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon"><i class="fa-solid fa-user"></i></span>
+                            {{ form.name }}
+                        </div>
+                    </div>
+                    <div class="form-field">
+                        <label for="{{ form.email.id_for_label }}">Email</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon"><i class="fa-solid fa-envelope"></i></span>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="{{ form.subject.id_for_label }}">Subject</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon"><i class="fa-solid fa-tag"></i></span>
+                        {{ form.subject }}
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="{{ form.message.id_for_label }}">Message</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon"><i class="fa-solid fa-message"></i></span>
+                        {{ form.message }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-accent contact-submit">Send Message <span class="btn-arrow">→</span></button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

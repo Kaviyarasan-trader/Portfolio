@@ -1,0 +1,16 @@
+{% for group, options, index in widget.optgroups %}
+    {% for option in options %}
+        <div class="pimg-existing-item">
+            <label for="{{ option.attrs.id }}" class="pimg-existing-label">
+                <input type="checkbox" name="{{ widget.name }}" value="{{ option.value }}"
+                    {% if option.attrs.checked %}checked{% endif %}
+                    {% if option.attrs.disabled %}disabled{% endif %}
+                    {% if widget.attrs.id %}id="{{ option.attrs.id }}"{% endif %}>
+                <span class="pimg-existing-thumb">
+                    {% if option.attrs.data_thumb %}<img src="{{ option.attrs.data_thumb }}" alt="">{% else %}<span class="pimg-existing-fallback">img</span>{% endif %}
+                </span>
+                <span class="pimg-existing-name">{{ option.label }}</span>
+            </label>
+        </div>
+    {% endfor %}
+{% endfor %}

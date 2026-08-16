@@ -1,0 +1,33 @@
+<!-- Backup: current contact form markup from core/templates/index.html -->
+<form method="post" class="contact-form reveal" data-delay="2">
+    {% csrf_token %}
+    <div class="form-heading">
+        <h3>Send me a message</h3>
+        <p>Have a project in mind or want to discuss an opportunity?
+        Send me a message and I&apos;ll get back to you.</p>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    <div class="form-row">
+        <div class="form-field">
+            <label for="{{ form.name.id_for_label }}">Name</label>
+            {{ form.name }}
+        </div>
+        <div class="form-field">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+        </div>
+    </div>
+    <div class="form-field">
+        <label for="{{ form.subject.id_for_label }}">Subject</label>
+        {{ form.subject }}
+    </div>
+    <div class="form-field">
+        <label for="{{ form.message.id_for_label }}">Message</label>
+        {{ form.message }}
+    </div>
+    <button type="submit" class="btn btn-accent btn-block">Send Message <span class="btn-arrow">→</span></button>
+</form>

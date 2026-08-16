@@ -1,0 +1,29 @@
+{% extends "admin/base.html" %}{% load i18n static %}{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:'Portfolio Studio' }}{% endblock %}
+
+{% block branding %}
+<div class="premium-brand">
+  <a class="premium-brand__mark" href="{% url 'admin:index' %}" title="Portfolio Studio">KR</a>
+  <div class="premium-brand__text">
+    <a class="premium-brand__name" href="{% url 'admin:index' %}">Portfolio Studio</a>
+    <span class="premium-brand__sub">Kaviyarasan R · Admin</span>
+  </div>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'css/admin-premium.css' %}">
+{% endblock %}
+
+{% block extrahead %}
+<script src="{% static 'js/admin-premium.js' %}" defer></script>
+{% endblock %}
+
+{% block responsive %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin-premium.css' %}">
+{% endblock %}
+
+{% block extrabody %}
+<div class="premium-bg" aria-hidden="true"></div>
+{% endblock %}

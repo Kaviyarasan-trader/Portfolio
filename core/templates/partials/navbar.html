@@ -1,0 +1,59 @@
+{% load portfolio_tags %}
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo" aria-label="Kaviyarasan R — home">
+            <span class="nav-avatar" data-photo-open role="button" aria-haspopup="dialog" aria-label="View profile photo">
+                {% if global_profile_image_exists %}
+                    <img src="{{ global_profile_image }}?v={{ global_profile_image_version }}" alt="" aria-hidden="true">
+                {% else %}
+                    <span class="nav-avatar-fallback">R</span>
+                {% endif %}
+            </span>
+            <span class="nav-brand">{{ global_profile.name|default:"Kaviyarasan R" }}</span>
+        </a>
+
+        <div class="nav-links" role="navigation" aria-label="Main navigation">
+            <a href="#home" class="nav-link" data-nav><span class="nav-idx">01</span>Home</a>
+            <a href="#about" class="nav-link" data-nav><span class="nav-idx">02</span>About</a>
+            <a href="#skills" class="nav-link" data-nav><span class="nav-idx">03</span>Stack</a>
+            <a href="#experience" class="nav-link" data-nav><span class="nav-idx">04</span>Experience</a>
+            <a href="#projects" class="nav-link" data-nav><span class="nav-idx">05</span>Projects</a>
+            <a href="#focus" class="nav-link" data-nav><span class="nav-idx">06</span>Engineering Focus</a>
+            <a href="#approach" class="nav-link" data-nav><span class="nav-idx">07</span>Development Approach</a>
+            <a href="#education" class="nav-link" data-nav><span class="nav-idx">08</span>Education</a>
+            <a href="#contact" class="nav-link" data-nav><span class="nav-idx">09</span>Contact</a>
+        </div>
+
+        <div class="nav-actions">
+            {% if global_profile.github %}<a href="{{ global_profile.github }}" target="_blank" rel="noopener" class="nav-gh" aria-label="GitHub"><i class="fa-brands fa-github" aria-hidden="true"></i></a>{% endif %}
+            <a href="{% resume_url %}" class="nav-resume" download aria-label="Download resume as PDF"><i class="fa-solid fa-download" aria-hidden="true"></i><span>Resume</span></a>
+            <button class="nav-burger" id="burger" aria-label="Open menu" aria-expanded="false">
+                <span class="nav-burger-line"></span>
+                <span class="nav-burger-line"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Full-screen mobile menu -->
+    <div class="nav-overlay" id="navOverlay">
+        <div class="nav-overlay-inner">
+            <ul class="nav-overlay-links">
+                <li><a href="#home" class="nav-overlay-link" data-nav><span class="nav-idx">01</span>Home</a></li>
+                <li><a href="#about" class="nav-overlay-link" data-nav><span class="nav-idx">02</span>About</a></li>
+                <li><a href="#skills" class="nav-overlay-link" data-nav><span class="nav-idx">03</span>Stack</a></li>
+                <li><a href="#experience" class="nav-overlay-link" data-nav><span class="nav-idx">04</span>Experience</a></li>
+                <li><a href="#projects" class="nav-overlay-link" data-nav><span class="nav-idx">05</span>Projects</a></li>
+                <li><a href="#github" class="nav-overlay-link" data-nav><span class="nav-idx">06</span>GitHub</a></li>
+                <li><a href="#focus" class="nav-overlay-link" data-nav><span class="nav-idx">07</span>Engineering Focus</a></li>
+                <li><a href="#approach" class="nav-overlay-link" data-nav><span class="nav-idx">08</span>Development Approach</a></li>
+                <li><a href="#education" class="nav-overlay-link" data-nav><span class="nav-idx">09</span>Education</a></li>
+                <li><a href="#contact" class="nav-overlay-link" data-nav><span class="nav-idx">10</span>Contact</a></li>
+                <li><a href="{% resume_url %}" class="nav-overlay-link" download><span class="nav-idx"><i class="fa-solid fa-download" aria-hidden="true"></i></span>Download Resume</a></li>
+            </ul>
+            <div class="nav-overlay-foot">
+                {% if global_profile.email %}<a href="mailto:{{ global_profile.email }}" class="nav-overlay-mail">{{ global_profile.email }}</a>{% endif %}
+                <p class="nav-overlay-meta">{{ global_profile.location|default:"" }}, INDIA — {{ global_profile.role|default:"" }}</p>
+            </div>
+        </div>
+    </div>
+</nav>

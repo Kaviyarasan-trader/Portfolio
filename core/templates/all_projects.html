@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ global_profile.name|default:"Kaviyarasan R" }} — All Projects{% endblock %}
+
+{% block content %}
+
+<!-- ================= ALL PROJECTS ================= -->
+<section class="all-projects section" id="projects">
+    <div class="container">
+        <div class="all-projects-head">
+            <a href="{% url 'index' %}#projects" class="all-projects-back"><span aria-hidden="true">←</span> Back to Portfolio</a>
+            <span class="section-label reveal">Projects</span>
+            <h1 class="all-projects-title reveal">All Projects</h1>
+            <p class="all-projects-sub reveal">A collection of projects I've built with Django, Python and modern web technologies.</p>
+        </div>
+
+        <div class="projects-grid">
+            {% for project in projects %}
+            {% include 'partials/_project_card.html' %}
+            {% empty %}
+            <p class="empty-note">Projects coming soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

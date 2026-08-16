@@ -1,0 +1,107 @@
+/* Project Images (Optional) — multi-upload previews in the Django admin
+   Matches the Portfolio Studio premium dark theme. */
+.pimg-preview {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-start;
+}
+.pimg-preview-item {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 8px 18px -8px rgba(0, 0, 0, 0.7);
+}
+.pimg-preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.pimg-preview-item.is-uploading { outline: 2px dashed rgba(110, 168, 255, 0.6); outline-offset: 2px; }
+.pimg-preview-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    line-height: 1;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(10, 12, 16, 0.85);
+    color: #ff6b81;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+.pimg-preview-remove:hover { background: #ff6b81; color: #fff; transform: scale(1.08); }
+.pimg-preview-hint {
+    flex-basis: 100%;
+    color: #626b7b;
+    font-size: 12px;
+    margin: 2px 0 0;
+    font-family: var(--pre-font-m, "JetBrains Mono", monospace);
+}
+
+.pimg-existing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 6px;
+}
+.pimg-existing-item {
+    width: 164px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 8px;
+}
+.pimg-existing-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    color: #a6aebf;
+}
+.pimg-existing-thumb {
+    width: 46px;
+    height: 46px;
+    flex: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pimg-existing-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.pimg-existing-fallback {
+    color: #626b7b;
+    font-size: 10px;
+}
+.pimg-existing-name {
+    color: #a6aebf;
+    word-break: break-all;
+    line-height: 1.25;
+}
+.pimg-existing-item:has(input:checked) {
+    border-color: rgba(110, 168, 255, 0.55);
+    box-shadow: 0 0 0 2px rgba(110, 168, 255, 0.18);
+}

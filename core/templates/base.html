@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>{% block title %}{{ global_profile.name|default:"Kaviyarasan R" }} — {{ global_profile.role|default:"Python Django Full Stack Developer" }}{% endblock %}</title>
+
+    <meta name="description" content="{{ global_profile.name|default:'' }} — {{ global_profile.role|default:'Python Django Full Stack Developer' }}. {{ global_profile.tagline|default:'' }}">
+    <meta name="author" content="{{ global_profile.name|default:'' }}">
+    <meta name="theme-color" content="#FAFAFA">
+    <meta name="robots" content="index, follow">
+    <script>document.documentElement.classList.add('js');</script>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ global_profile.name|default:'Portfolio' }} — {{ global_profile.role|default:'Python Django Full Stack Developer' }}">
+    <meta property="og:description" content="{{ global_profile.tagline|default:'' }}">
+    {% if global_profile_image_exists %}
+    <meta property="og:image" content="{{ request.build_absolute_uri }}{{ global_profile_image }}">
+    {% endif %}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ global_profile.name|default:'Portfolio' }} — {{ global_profile.role|default:'Python Django Full Stack Developer' }}">
+    <meta name="twitter:description" content="{{ global_profile.tagline|default:'' }}">
+
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devicon@2.15.1/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=36">
+</head>
+<body>
+
+    <!-- Loader -->
+    <div class="loader" id="loader" aria-hidden="true">
+        <div class="loader-inner">
+            <div class="loader-copy">
+                <p class="loader-title">KAVIYARASAN R</p>
+                <p class="loader-role">Django Full Stack Developer</p>
+            </div>
+            <div class="loader-status">
+                <span class="loader-status-dot" aria-hidden="true"></span>
+                <span class="loader-status-text">INITIALIZING...</span>
+            </div>
+            <span class="loader-bar"><span class="loader-bar-fill"></span></span>
+        </div>
+    </div>
+
+    <!-- Ambient background -->
+    <div class="bg" aria-hidden="true">
+        <div class="bg-grid"></div>
+    </div>
+    <div class="bg-noise" aria-hidden="true"></div>
+
+    <!-- Scroll progress -->
+    <div class="progress" id="progress" aria-hidden="true"></div>
+
+    {% include 'partials/navbar.html' %}
+
+    <!-- Main content (above the ambient code layer, below nothing) -->
+    <main class="page-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div>
+                    <h2 class="footer-name">{{ global_profile.name|default:"KAVIYARASAN R" }}</h2>
+                    <p class="footer-role">{{ global_profile.role|default:"DJANGO FULL STACK DEVELOPER" }}</p>
+                </div>
+                <p class="footer-summary">Building practical web experiences with<br>Python, Django and modern web technologies.</p>
+                <div class="footer-socials">
+                    {% if global_profile.github %}<a href="{{ global_profile.github }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i><span>GitHub</span></a>{% endif %}
+                    {% if global_profile.linkedin %}<a href="{{ global_profile.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>{% endif %}
+                    {% if global_profile.email %}<a href="mailto:{{ global_profile.email }}" aria-label="Email"><i class="fa-solid fa-envelope"></i><span>Email</span></a>{% endif %}
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copy">&copy; {% now "Y" %} {{ global_profile.name|default:"Kaviyarasan R" }}</p>
+                <p class="footer-copy footer-credit">Designed &amp; Developed by {{ global_profile.name|default:"Kaviyarasan R" }}</p>
+                <button class="footer-top" id="toTop" aria-label="Back to top">TOP <i class="fa-solid fa-arrow-up"></i></button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project details modal -->
+    <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-label="Project details" aria-hidden="true">
+        <div class="pm-backdrop" data-pm-close></div>
+        <div class="pm-panel" role="document">
+            <div class="pm-head">
+                <div>
+                    <span class="pm-kicker">Project Details</span>
+                    <h3 class="pm-title" id="projectModalTitle"></h3>
+                </div>
+                <button class="pm-close" type="button" data-pm-close aria-label="Close details">&times;</button>
+            </div>
+            <div class="pm-body"></div>
+        </div>
+    </div>
+
+    <!-- Project image gallery -->
+    <div class="gallery" id="gallery" role="dialog" aria-modal="true" aria-label="Project images" aria-hidden="true">
+        <div class="gallery-stage" data-gallery-stage>
+            {% for project in gallery_projects %}
+            {% with project_images=project.images.all %}
+            {% if project_images %}
+            <div class="gallery-group" id="gallery-{{ project.id }}" data-gallery-group>
+                {% for image in project_images %}
+                <figure class="gallery-slide{% if forloop.first %} is-active{% endif %}" data-slide>
+                    <img class="gallery-img" src="{{ image.image.url }}" alt="{{ project.title }} — image {{ forloop.counter }}" loading="lazy">
+                </figure>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            {% endfor %}
+        </div>
+
+        <button class="gallery-close" type="button" data-gallery-close aria-label="Close gallery">&times;</button>
+        <button class="gallery-arrow gallery-arrow--prev" type="button" data-gallery-prev aria-label="Previous image">&#8249;</button>
+        <button class="gallery-arrow gallery-arrow--next" type="button" data-gallery-next aria-label="Next image">&#8250;</button>
+        <div class="gallery-dots" data-gallery-dots role="group" aria-label="Image navigation"></div>
+        <div class="gallery-counter" data-gallery-counter aria-live="polite"></div>
+    </div>
+
+    <!-- Profile photo preview -->
+    <div class="img-modal" id="imgModal" role="dialog" aria-modal="true" aria-label="Profile view" aria-hidden="true">
+        <div class="img-modal-glow" aria-hidden="true"></div>
+        <div class="img-modal-code" id="imgModalCode" aria-hidden="true"></div>
+        <button class="img-modal-close" id="imgModalClose" type="button" aria-label="Close profile view">&times;</button>
+
+        <div class="img-modal-inner" id="imgModalInner">
+            <div class="img-modal-photo" id="imgModalPhoto">
+                <img id="imgModalImg" src="" alt="Profile photo of {{ global_profile.name|default:'Kaviyarasan R' }}">
+            </div>
+
+            <div class="img-modal-actions" id="imgModalActions">
+                <button type="button" class="profile-action" id="actionShare" aria-label="Share profile">
+                    <span class="profile-action-icon"><i class="fa-solid fa-share-nodes" aria-hidden="true"></i></span>
+                    <span class="profile-action-label">Share Profile</span>
+                </button>
+                <button type="button" class="profile-action" id="actionCopy" aria-label="Copy profile link">
+                    <span class="profile-action-icon"><i class="fa-solid fa-link" aria-hidden="true"></i></span>
+                    <span class="profile-action-label">Copy Link</span>
+                </button>
+                <button type="button" class="profile-action" id="actionQr" aria-label="Show QR code">
+                    <span class="profile-action-icon"><i class="fa-solid fa-qrcode" aria-hidden="true"></i></span>
+                    <span class="profile-action-label">QR Code</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="img-modal-toast" id="imgModalToast" role="status" aria-live="polite">Copied!</div>
+    </div>
+
+    <!-- Profile share menu -->
+    <div class="share-menu" id="shareMenu" role="menu" aria-label="Share profile" aria-hidden="true">
+        <button type="button" class="share-item" role="menuitem" data-share="native">
+            <span class="share-item-icon" aria-hidden="true"><i class="fa-solid fa-share-nodes"></i></span>
+            <span class="share-item-label">Share Profile</span>
+        </button>
+        <button type="button" class="share-item" role="menuitem" data-share="copy">
+            <span class="share-item-icon" aria-hidden="true"><i class="fa-solid fa-link"></i></span>
+            <span class="share-item-label">Copy Link</span>
+        </button>
+        <button type="button" class="share-item" role="menuitem" data-share="qr">
+            <span class="share-item-icon" aria-hidden="true"><i class="fa-solid fa-qrcode"></i></span>
+            <span class="share-item-label">QR Code</span>
+        </button>
+    </div>
+
+    <!-- QR code modal -->
+    <div class="qr-popup" id="qrPopup" role="dialog" aria-modal="true" aria-label="QR code" aria-hidden="true">
+        <div class="qr-card">
+            <button class="qr-card-close" id="qrClose" type="button" aria-label="Close QR code">&times;</button>
+            <p class="qr-card-title">Scan to view my portfolio</p>
+            <div class="qr-card-box" id="qrBox"></div>
+            <p class="qr-card-url" id="qrUrl"></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="{% static 'js/script.js' %}?v=11"></script>
+</body>
+</html>
